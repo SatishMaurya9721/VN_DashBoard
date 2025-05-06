@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|c:\\users\\admin\\downloads\\vn_dashboard06may\\vn_dashboard\\dashboard\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|solutionrelative:dashboard\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|c:\\users\\admin\\downloads\\vn_dashboard06may\\vn_dashboard\\dashboard\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|solutionrelative:dashboard\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|c:\\users\\admin\\downloads\\vn_dashboard06may\\vn_dashboard\\dashboard\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|solutionrelative:dashboard\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|c:\\users\\admin\\downloads\\vn_dashboard06may\\vn_dashboard\\dashboard\\model\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|solutionrelative:dashboard\\model\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|c:\\users\\admin\\downloads\\vn_dashboard06may\\vn_dashboard\\dashboard\\model\\dbhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA10E60F-1123-4C23-84CD-F1B05162EF5C}|DashBoard\\DashBoard.csproj|solutionrelative:dashboard\\model\\dbhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\Program.cs",
+              "RelativeDocumentMoniker": "DashBoard\\Program.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\Program.cs",
+              "RelativeToolTip": "DashBoard\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-27T10:09:41.935Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "DashBoard\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "DashBoard\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAA1wCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-27T09:53:53.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RegisterRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\Model\\RegisterRequest.cs",
+              "RelativeDocumentMoniker": "DashBoard\\Model\\RegisterRequest.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\Model\\RegisterRequest.cs",
+              "RelativeToolTip": "DashBoard\\Model\\RegisterRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-27T09:52:40.68Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\appsettings.json",
+              "RelativeDocumentMoniker": "DashBoard\\appsettings.json",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\appsettings.json",
+              "RelativeToolTip": "DashBoard\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-27T09:52:02.565Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DbHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\Model\\DbHelper.cs",
+              "RelativeDocumentMoniker": "DashBoard\\Model\\DbHelper.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\Model\\DbHelper.cs",
+              "RelativeToolTip": "DashBoard\\Model\\DbHelper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-27T09:51:12.01Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "VN_DashBoard\\VN_DashBoard.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "DashBoard\\DashBoard.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
