@@ -35,14 +35,12 @@ namespace DashBoard.Controllers
 			{
 				cmd.ExecuteNonQuery();
 				return Ok(new { statuscode = 200, message = "User registered successfully." });
-				//return StatusCode(200, "User registered successfully.");  // 201 Created
 
 			}
 			catch (SqlException ex)
 			{
 				return Ok(new { statuscode = 400, message = ex.Message});
 
-				//return StatusCode(400, $"Error: {ex.Message}");            // 400 Bad Request
 			}
 		}
 
@@ -61,17 +59,14 @@ namespace DashBoard.Controllers
 				var storedHash = reader.GetString(0);
 
 				if (VerifyPassword(request.Password, storedHash))
-					//return StatusCode(200, "Login successful."); // 200 OK
 					return Ok(new { statuscode = 200, message = "Login successful." });
 
 				else
-					//return StatusCode(401, "Invalid credentials."); // 401 Unauthorized
 				return Ok(new { statuscode = 401, message = "Invalid credentials." });
 
 			}
 			else
 			{
-				//return StatusCode(404, "User not found."); // 404 Not Found
 				return Ok(new { statuscode = 404, message = "User not found." });
 
 			}
