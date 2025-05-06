@@ -4,18 +4,23 @@ using Microsoft.Data.SqlClient;
 
 namespace DashBoard.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CategoryController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly DbHelper _dbHelper;
+        private readonly IWebHostEnvironment _env;
 
-        public CategoryController(DbHelper dbHelper,IConfiguration configuration)
+
+        public CategoryController(DbHelper dbHelper,IConfiguration configuration, IWebHostEnvironment env)
         {
             _dbHelper = dbHelper;
             _configuration = configuration;
+            _env = env;
         }
         // INSERT
-        [HttpPost("add")]
+        [HttpPost("addCategory")]
         public IActionResult AddCategory([FromBody] Category category)
         {
             using var conn = _dbHelper.GetConnection();
@@ -36,7 +41,7 @@ namespace DashBoard.Controllers
         }
 
         // READ ALL
-        [HttpGet("list")]
+        [HttpGet("getAllCategories")]
         public IActionResult GetAllCategories()
         {
             try
@@ -87,7 +92,7 @@ namespace DashBoard.Controllers
         }
 
         // UPDATE
-        [HttpPut("update")]
+        [HttpPut("updateCategory")]
         public IActionResult UpdateCategory([FromBody] Category category)
         {
             using var conn = _dbHelper.GetConnection();
@@ -112,7 +117,7 @@ namespace DashBoard.Controllers
         }
 
         // DELETE
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("deleteCategory/{id}")]
         public IActionResult DeleteCategory(int id)
         {
             using var conn = _dbHelper.GetConnection();
@@ -134,5 +139,181 @@ namespace DashBoard.Controllers
                 return BadRequest(new { statuscode = 400, message = ex.Message });
             }
         }
+        [HttpPost("insertSubCategory")]
+        public async Task<IActionResult> InsertSubCategory(SubCategoryMaster model)
+        {
+            if (model.File == null || model.File.Length == 0)
+                return BadRequest("File not selected.");
+
+            string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+
+            if (!Directory.Exists(uploadFolder))
+            {
+                Directory.CreateDirectory(uploadFolder);
+            }
+
+            string filePath = Path.Combine(uploadFolder, model.File.FileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                model.File.CopyTo(stream);
+            }
+
+            // Your SQL logic here
+            using var conn = _dbHelper.GetConnection();
+            conn.Open();
+
+
+            var cmd = new SqlCommand(@"INSERT INTO SubCategoryMaster (CategoryId, FileName, PaymentType, Amount, FilePath) 
+                                   VALUES (@CategoryId, @FileName, @PaymentType, @Amount, @FilePath)", conn);
+            cmd.Parameters.AddWithValue("@CategoryId", model.CategoryId);
+            cmd.Parameters.AddWithValue("@FileName", model.FileName);
+            cmd.Parameters.AddWithValue("@PaymentType", model.PaymentType);
+            cmd.Parameters.AddWithValue("@Amount", model.Amount);
+            cmd.Parameters.AddWithValue("@FilePath", filePath);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return Ok(new { statuscode = 200, message = "Subcategory inserted successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { statuscode = 500, message = ex.Message });
+            }
+        }
+
+        // GET ALL
+        [HttpGet("getAllSubCategory")]
+        [HttpGet]
+        public IActionResult GetAllSubCategory()
+        {
+            try
+            {
+                using var conn = _dbHelper.GetConnection();
+                conn.Open();
+
+                var cmd = new SqlCommand("SELECT * FROM SubCategoryMaster", conn);
+                var reader = cmd.ExecuteReader();
+
+                var list = new List<object>();
+
+                while (reader.Read())
+                {
+                    list.Add(new
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        FileName = reader["FileName"]?.ToString(),
+                        PaymentType = reader["PaymentType"]?.ToString(),
+                        Amount = reader["Amount"] != DBNull.Value ? Convert.ToDecimal(reader["Amount"]) : 0,
+                        FilePath = reader["FilePath"]?.ToString()
+                    });
+                }
+
+                if (list.Count == 0)
+                {
+                    return Ok(new { statuscode = 404, message = "No sub-category records found.", data = new List<object>() });
+                }
+
+                return Ok(new { statuscode = 200, message = "Sub-category data fetched successfully.", data = list });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { statuscode = 500, message = "An error occurred while fetching data.", error = ex.Message });
+            }
+        }
+
+        // UPDATE
+        [HttpPut("updateSubCategory")]
+        public IActionResult UpdateSubCategory(SubCategoryMaster model)
+        {
+            try
+            {
+                using var conn = _dbHelper.GetConnection();
+                conn.Open();
+
+                string? filePath = null;
+
+                if (model.File != null && model.File.Length > 0)
+                {
+                    // Set upload folder path
+                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+
+                    // Create directory if not exists
+                    if (!Directory.Exists(uploadFolder))
+                        Directory.CreateDirectory(uploadFolder);
+
+                    // Generate unique file name to avoid conflicts
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
+                    filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                    // Save file to server
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.File.CopyTo(stream);
+                    }
+                }
+
+                var cmd = new SqlCommand(@"
+            UPDATE SubCategoryMaster SET 
+                CategoryId = @CategoryId,
+                FileName = @FileName,
+                PaymentType = @PaymentType,
+                Amount = @Amount
+                " + (filePath != null ? ", FilePath = @FilePath " : "") + @"
+            WHERE Id = @Id", conn);
+
+                cmd.Parameters.AddWithValue("@Id", model.Id);
+                cmd.Parameters.AddWithValue("@CategoryId", model.CategoryId);
+                cmd.Parameters.AddWithValue("@FileName", model.FileName ?? string.Empty);
+                cmd.Parameters.AddWithValue("@PaymentType", model.PaymentType ?? string.Empty);
+                cmd.Parameters.AddWithValue("@Amount", model.Amount);
+
+                if (filePath != null)
+                    cmd.Parameters.AddWithValue("@FilePath", filePath);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    return Ok(new { statuscode = 200, message = "Subcategory updated successfully." });
+                }
+                else
+                {
+                    return NotFound(new { statuscode = 404, message = "Subcategory not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { statuscode = 500, message = "An error occurred.", error = ex.Message });
+            }
+        }
+
+
+        // DELETE
+        [HttpGet("deleteSubCategory/{id}")]
+        public IActionResult DeleteSubCategory(int id)
+        {
+            using var conn = _dbHelper.GetConnection();
+            conn.Open();
+
+            var cmd = new SqlCommand("DELETE FROM SubCategoryMaster WHERE Id = @Id", conn);
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            try
+            {
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                    return Ok(new { statuscode = 200, message = "Subcategory deleted successfully." });
+                else
+                    return NotFound(new { statuscode = 404, message = "Subcategory not found." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { statuscode = 500, message = ex.Message });
+            }
+        }
+
     }
 }
