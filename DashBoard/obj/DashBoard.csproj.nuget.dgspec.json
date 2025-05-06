@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\DashBoard.csproj": {}
+    "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\New folder\\DashBoard\\DashBoard.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\DashBoard.csproj": {
+    "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\New folder\\DashBoard\\DashBoard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\DashBoard.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\New folder\\DashBoard\\DashBoard.csproj",
         "projectName": "DashBoard",
-        "projectPath": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\DashBoard.csproj",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\New folder\\DashBoard\\DashBoard.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\VN_DashBoard\\DashBoard\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\VN_DashBoard06may\\New folder\\DashBoard\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
