@@ -193,7 +193,7 @@ namespace DashBoard.Controllers
                 using var conn = _dbHelper.GetConnection();
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT * FROM SubCategoryMaster", conn);
+                var cmd = new SqlCommand("SELECT c.Name as CategoryName,scm.Id,scm.CategoryId,scm.FileName,scm.FilePath,scm.PaymentType,scm.Amount FROM SubCategoryMaster scm left join Category c on scm.CategoryId=c.Id", conn);
                 var reader = cmd.ExecuteReader();
 
                 var list = new List<object>();
@@ -205,6 +205,7 @@ namespace DashBoard.Controllers
                         Id = Convert.ToInt32(reader["Id"]),
                         CategoryId = Convert.ToInt32(reader["CategoryId"]),
                         FileName = reader["FileName"]?.ToString(),
+                        CategoryName = reader["CategoryName"]?.ToString(),
                         PaymentType = reader["PaymentType"]?.ToString(),
                         Amount = reader["Amount"] != DBNull.Value ? Convert.ToDecimal(reader["Amount"]) : 0,
                         FilePath = reader["FilePath"]?.ToString()
