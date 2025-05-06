@@ -186,14 +186,17 @@ namespace DashBoard.Controllers
         // GET ALL
         [HttpGet("getAllSubCategory")]
         [HttpGet]
-        public IActionResult GetAllSubCategory()
+        public IActionResult GetAllSubCategory(int CategoryId)
         {
             try
             {
                 using var conn = _dbHelper.GetConnection();
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT c.Name as CategoryName,scm.Id,scm.CategoryId,scm.FileName,scm.FilePath,scm.PaymentType,scm.Amount FROM SubCategoryMaster scm left join Category c on scm.CategoryId=c.Id", conn);
+                var cmd = new SqlCommand("SELECT c.Name as CategoryName,scm.Id,scm.CategoryId,scm.FileName,scm.FilePath,scm.PaymentType,scm.Amount FROM SubCategoryMaster scm " +
+                    "left join Category c on scm.CategoryId=c.Id where scm.CategoryId= @CategoryId", conn);
+                cmd.Parameters.AddWithValue("@CategoryId", CategoryId);
+
                 var reader = cmd.ExecuteReader();
 
                 var list = new List<object>();
