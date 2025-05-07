@@ -186,14 +186,17 @@ namespace DashBoard.Controllers
         // GET ALL
         [HttpGet("getAllSubCategory")]
         [HttpGet]
-        public IActionResult GetAllSubCategory()
+        public IActionResult GetAllSubCategory(int CategoryId)
         {
             try
             {
                 using var conn = _dbHelper.GetConnection();
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT c.Name as CategoryName,scm.Id,scm.CategoryId,scm.FileName,scm.FilePath,scm.PaymentType,scm.Amount FROM SubCategoryMaster scm left join Category c on scm.CategoryId=c.Id", conn);
+                var cmd = new SqlCommand("SELECT c.Name as CategoryName,scm.Id,scm.CategoryId,scm.FileName,scm.FilePath,scm.PaymentType,scm.Amount FROM SubCategoryMaster scm " +
+                    "left join Category c on scm.CategoryId=c.Id where scm.CategoryId= @CategoryId", conn);
+                cmd.Parameters.AddWithValue("@CategoryId", CategoryId);
+
                 var reader = cmd.ExecuteReader();
 
                 var list = new List<object>();
@@ -315,6 +318,96 @@ namespace DashBoard.Controllers
                 return StatusCode(500, new { statuscode = 500, message = ex.Message });
             }
         }
+		[HttpPost("insertOrder")]
+		public async Task<IActionResult> InsertOrder(OrderDetails model)
+		{
+			using var conn = _dbHelper.GetConnection();
 
-    }
+			if (model == null)
+				return BadRequest("Invalid order details.");
+
+			conn.Open();
+
+			var cmd = new SqlCommand(@"INSERT INTO OrderDetails 
+            (OrderPersonName, OrderPersonEmail, OrderPersonPhoneNo, PaymentId) 
+            VALUES (@OrderPersonName, @OrderPersonEmail, @OrderPersonPhoneNo, @PaymentId)", conn);
+
+			cmd.Parameters.AddWithValue("@OrderPersonName", model.OrderPersonName);
+			cmd.Parameters.AddWithValue("@OrderPersonEmail", model.OrderPersonEmail);
+			cmd.Parameters.AddWithValue("@OrderPersonPhoneNo", model.OrderPersonPhoneNo);
+			cmd.Parameters.AddWithValue("@PaymentId", model.PaymentId);
+
+			try
+			{
+				await cmd.ExecuteNonQueryAsync();
+				return Ok(new { statuscode = 200, message = "Order inserted successfully." });
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, new { statuscode = 500, message = ex.Message });
+			}
+		}
+		// GET: api/order/getOrders
+		[HttpGet("getOrders")]
+		public async Task<IActionResult> GetOrders()
+		{
+			List<OrderDetails> orders = new List<OrderDetails>();
+
+			using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+			await conn.OpenAsync();
+
+			var cmd = new SqlCommand("SELECT * FROM OrderDetails", conn);
+
+			using var reader = await cmd.ExecuteReaderAsync();
+			while (await reader.ReadAsync())
+			{
+				orders.Add(new OrderDetails
+				{
+					Id = reader.GetInt32(reader.GetOrdinal("Id")),
+					OrderPersonName = reader.GetString(reader.GetOrdinal("OrderPersonName")),
+					OrderPersonEmail = reader.GetString(reader.GetOrdinal("OrderPersonEmail")),
+					OrderPersonPhoneNo = reader.GetString(reader.GetOrdinal("OrderPersonPhoneNo")),
+					PaymentId = reader.GetString(reader.GetOrdinal("PaymentId"))
+				});
+			}
+
+			if (orders.Count == 0)
+				return Ok(new { statuscode = 200, message = "No orders found.", data = orders });
+
+			return Ok(new { statuscode = 200, message = "Orders fetched successfully.", data = orders });
+		}
+
+		// GET: api/order/getOrderById/5
+		[HttpGet("getOrderById/{id}")]
+		public async Task<IActionResult> GetOrderById(int id)
+		{
+			OrderDetails order = null;
+
+			using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+			await conn.OpenAsync();
+
+			var cmd = new SqlCommand("SELECT * FROM OrderDetails WHERE Id = @Id", conn);
+			cmd.Parameters.AddWithValue("@Id", id);
+
+			using var reader = await cmd.ExecuteReaderAsync();
+			if (await reader.ReadAsync())
+			{
+				order = new OrderDetails
+				{
+					Id = reader.GetInt32(reader.GetOrdinal("Id")),
+					OrderPersonName = reader.GetString(reader.GetOrdinal("OrderPersonName")),
+					OrderPersonEmail = reader.GetString(reader.GetOrdinal("OrderPersonEmail")),
+					OrderPersonPhoneNo = reader.GetString(reader.GetOrdinal("OrderPersonPhoneNo")),
+					PaymentId = reader.GetString(reader.GetOrdinal("PaymentId"))
+				};
+			}
+
+			if (order == null)
+				return NotFound(new { statuscode = 404, message = $"Order with ID {id} not found." });
+
+			return Ok(new { statuscode = 200, message = "Order fetched successfully.", data = order });
+		}
+
+
+	}
 }
