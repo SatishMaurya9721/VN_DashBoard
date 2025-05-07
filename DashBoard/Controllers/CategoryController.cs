@@ -318,6 +318,34 @@ namespace DashBoard.Controllers
                 return StatusCode(500, new { statuscode = 500, message = ex.Message });
             }
         }
+		[HttpPost("insertOrder")]
+		public async Task<IActionResult> InsertOrder(OrderDetails model)
+		{
+			using var conn = _dbHelper.GetConnection();
 
-    }
+			if (model == null)
+				return BadRequest("Invalid order details.");
+
+			conn.Open();
+
+			var cmd = new SqlCommand(@"INSERT INTO OrderDetails 
+            (OrderPersonName, OrderPersonEmail, OrderPersonPhoneNo, PaymentId) 
+            VALUES (@OrderPersonName, @OrderPersonEmail, @OrderPersonPhoneNo, @PaymentId)", conn);
+
+			cmd.Parameters.AddWithValue("@OrderPersonName", model.OrderPersonName);
+			cmd.Parameters.AddWithValue("@OrderPersonEmail", model.OrderPersonEmail);
+			cmd.Parameters.AddWithValue("@OrderPersonPhoneNo", model.OrderPersonPhoneNo);
+			cmd.Parameters.AddWithValue("@PaymentId", model.PaymentId);
+
+			try
+			{
+				await cmd.ExecuteNonQueryAsync();
+				return Ok(new { statuscode = 200, message = "Order inserted successfully." });
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, new { statuscode = 500, message = ex.Message });
+			}
+		}
+	}
 }
