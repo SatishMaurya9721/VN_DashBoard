@@ -13,6 +13,8 @@
         public string PaymentType { get; set; }
         public decimal? Amount { get; set; }
         public IFormFile File { get; set; }
-    }
+		public string DownloadLink { get; set; }
+		public string QRLink { get; set; }
+	}
 
 }
